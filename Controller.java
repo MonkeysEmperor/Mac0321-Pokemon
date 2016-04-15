@@ -35,19 +35,36 @@ class EventSet {
 }
 
 public class Controller {
-	private EventSet es = new EventSet();
-
-	public void addEvent(Event c) {
-		es.add(c);
+	private EventSet actionsT1 = new EventSet();
+	private EventSet actionsT2  = new EventSet();
+	public void addEventT1(Event c) {
+		actionsT1.add(c);
+	}
+	public void addEventT2(Event c) {
+		actionsT2.add(c);
 	}
 
 	public void run() {
-		Event e;
+		Event e1, e2;
 		while ((e = es.getNext()) != null) {
 			if (e.ready()) {
-				e.action();
-				System.out.println(e.description());
-				es.removeCurrent();
+				if(){
+					e1.action();
+					System.out.println(e1.description());
+					actionsT1.removeCurrent();
+					e2.action();
+					System.out.println(e2.description());
+					actionsT2.removeCurrent();
+				}
+				else(){
+					e2.action();
+					System.out.println(e2.description());
+					actionsT2.removeCurrent();
+					e1.action();
+					System.out.println(e1.description());
+					actionsT1.removeCurrent();
+				}
+				
 			}
 		}
 	}
