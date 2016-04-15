@@ -7,7 +7,6 @@ public class Pokemon {
 	String name;
 	String type1;
 	String type2;
-	int batata;
 	
 	//Construtor de Pokemon
 	Pokemon (String nome, String tipo1, String tipo2, int vida){
@@ -38,4 +37,16 @@ public class Pokemon {
 		return hp;
 	}
 	
+	void ataque1(){
+		
+	}
+	void ataque2(){
+		
+	}
+	void ataque3(){
+	
+	}
+	void ataque4(){
+		
+	}
 }
