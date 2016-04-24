@@ -4,6 +4,7 @@ public class Trainer {
 
 	int potions;
 	int pokeball;
+	int pokemon = 6;
 	String name;
 	Pokemon[] p = new Pokemon[6];
 	

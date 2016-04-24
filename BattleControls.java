@@ -6,10 +6,9 @@ package c07.controller;
 public class BattleControls extends Controller {
 	private boolean battle = false;
 	private boolean round = true;
-	private int x = 0, y = 1; // controladores do treinador (x = trainador atacante, y = treinador atacado)
-	private int i = 0, j = 0; // controladores do vetor de pokemon (i = trainador 1, j = treinador 2)
+	private int x = 0, y = 1; // controladores do treinador (x = treinador atacante, y = treinador atacado)
+	private int i = 0, j = 0; // controladores do vetor de pokemon (i = treinador 1, j = treinador 2)
 	private int w = 0;// controlador do vetor de ataques
-	private int poke1 = 6, poke2 = 6; // conta o numero de pokemons disponíveis de cada treinador
 	Trainer[] t = new Trainer[2];
 	
 	//Começa a batalha inicializando os treinadores, seus Pokemons e seus Ataques 
@@ -243,6 +242,10 @@ public class BattleControls extends Controller {
 		public void action() {
 			effect = effective();
 			t[y].p[j].hp -= effect*t[x].p[i].a[w].power;
+			if(t[y].p[j].hp <= 0){
+				t[y].p[j].hp = 0;
+				t[y].pokemon -= 1;
+			}
 		}
 
 		public String description() {
@@ -267,6 +270,7 @@ public class BattleControls extends Controller {
 				t[x].p[i].hp = t[x].p[i].HPMAX;
 			else
 				t[x].p[i].hp += 20;
+			t[x].potions -= 1;
 		}
 
 		public String description() {
@@ -317,17 +321,12 @@ public class BattleControls extends Controller {
 		}
 
 		public String description() {
-			if(poke2 == 0){
-			   x = 0;
-			   y = 1;
-			}
-			else{
-				x = 1;
-				y = 0;
-			}
-				
-				return  t[y].getName() + " is out of usable pokemon\n" +
-						t[x].getName() + " won the battle";
+			if(t[x].pokemon == 0)
+			   return  t[x].getName() + " is out of usable pokemon\n" +
+				       t[y].getName() + " won the battle";
+			else
+			   return  t[y].getName() + " is out of usable pokemon\n" +
+			           t[x].getName() + " won the battle";
 		}
 	}
 
@@ -344,22 +343,17 @@ public class BattleControls extends Controller {
 			// file here:
 			
 			addEvent(new StartBattle(tm));
-			addEvent(new Fight(tm + 1000));
-			if(t[y].p[j].hp < 0){
-			   t[y].p[j].hp = 0;
-			   
-			   addEvent(new Switch(tm + 3000));
-			}
-			addEvent(new EndRound(tm + 1500));
-			addEvent(new Pack(tm + 2000));
+			addEvent(new Fight(tm + 1000));   
+			addEvent(new Switch(tm + 1500));
+			addEvent(new EndRound(tm + 2000));
+			addEvent(new Pack(tm + 2500));
 			addEvent(new Switch(tm + 3000));
 			addEvent(new Fight(tm + 4000));
+			addEvent(new EndRound(tm + 4500));
 			//addEvent(new Run(tm + 5000));
 			//Caso um dos treinadores esteja sem pokemons, a batalha acaba
-			if(poke1 == 0 || poke2 == 0)
-			   addEvent(new EndBattle(tm + 6000));
+			addEvent(new EndBattle(tm + 6000));
 			
-			addEvent(new EndBattle(tm + 7000));
 			
 		}
 
