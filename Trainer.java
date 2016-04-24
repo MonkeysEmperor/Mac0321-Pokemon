@@ -2,23 +2,21 @@ package c07.controller;
 
 public class Trainer {
 
-	String name;
-	Pokemon[] p = new Pokemon[6];
 	int potions;
 	int pokeball;
+	String name;
+	Pokemon[] p = new Pokemon[6];
 	
-	Trainer(String nome, int poções, int pokebolas, Pokemon[] pokemons){
+	Trainer(String nome, int poções, int pokebolas){
 		name = nome;
 		potions = poções;
 		pokeball = pokebolas;
-		p = pokemons;
 	}
 	
-	Trainer(String nome, Pokemon[] pokemons){
+	Trainer(String nome){
 		name = nome;
 		potions = 0;
 		pokeball = 0;
-		p = pokemons;
 	}
 	
 	void setName(String nome){
