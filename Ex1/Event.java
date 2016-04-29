@@ -1,4 +1,5 @@
-package c07.controller;
+package Ex1;
+
 
 abstract public class Event {
 	private long evtTime;

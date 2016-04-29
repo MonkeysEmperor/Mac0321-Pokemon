@@ -1,11 +1,19 @@
-package c07.controller;
+package Ex1;
+
 
 // This is just a way to hold Event objects.
-class EventSet {
-	private Event[] events = new Event[100];
+class Round {
+	private Event[] events;
 	private int index = 0;
 	private int next = 0;
-
+	
+	public Round (){
+		events = new Event [100];
+	}
+	public Round (int length){
+		events = new Event [length];
+	}
+	
 	public void add(Event e) {
 		if (index >= events.length)
 			return;
@@ -36,7 +44,16 @@ class EventSet {
 
 public class Controller {
 	
-	private EventSet es = new EventSet();
+	private Round es;
+	public Controller ()
+	{
+		es = new Round();
+	}
+	public Controller (int length)
+	{
+		es = new Round(length);
+	}
+	
 	public void addEvent(Event c) {
 		es.add(c);
 	}

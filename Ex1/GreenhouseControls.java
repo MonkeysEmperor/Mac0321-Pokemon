@@ -1,4 +1,5 @@
-package c07.controller;
+package Ex1;
+
 
 public class GreenhouseControls extends Controller {
 	private boolean light = false;

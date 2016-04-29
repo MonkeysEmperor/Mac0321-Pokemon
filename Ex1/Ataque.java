@@ -1,4 +1,5 @@
-package c07.controller;
+package Ex1;
+
 
 public class Ataque {
 
@@ -8,12 +9,12 @@ public class Ataque {
 	int pp;
 	double accuracy;
 	
-	Ataque(String nome, String tipo, int PP, int poder, double precisão ){
+	Ataque(String nome, String tipo, int pp, int poder, double precisao ){
 		name = nome;
 		type = tipo;
-		pp = PP;
+		this.pp = pp;
 		power = poder;
-		accuracy = precisão;
+		accuracy = precisao;
 	}
 	
 	Ataque(String nome, String tipo, int poder){

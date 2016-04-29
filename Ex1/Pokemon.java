@@ -1,9 +1,10 @@
-package c07.controller;
+package Ex1;
+
 
 public class Pokemon {
  
-	int HPMAX;
-	int hp = HPMAX;
+	final private int HPMAX;
+	private int hp;
 	String name;
 	String type1;
 	String type2;
@@ -34,11 +35,21 @@ public class Pokemon {
 		return name;
 	}
 	
-	int gethp(){
+	int getHp(){
 		return hp;
 	}
+	void setHp (int value){
+		hp = value;
+	}
 	
-	int getHP(){
+	void decreaseHp (int value){
+		hp -= value;
+	}
+	void increaseHp (int value){
+		hp += value;
+	}
+	
+	int getMaxHp(){
 		return HPMAX;
 	}
 }
