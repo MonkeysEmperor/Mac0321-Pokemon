@@ -20,7 +20,7 @@ class Round {
 
 
 	public Round() {
-		events = new Event[100];
+		events = new Event[1000];
 	}
 
 	public void add(Event e) {

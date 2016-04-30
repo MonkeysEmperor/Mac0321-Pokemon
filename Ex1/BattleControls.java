@@ -8,7 +8,7 @@ public class BattleControls extends Controller {
 	// atacante, y = treinador atacado)
 	// private int i = 0, j = 0; // controladores do vetor de pokemon (i =
 	// treinador 1, j = treinador 2)
-	private int w = 0;// controlador do vetor de ataques
+	
 	Trainer[] t = new Trainer[2];
 
 	// Comeca a batalha inicializando os treinadores, seus Pokemons e seus
@@ -135,7 +135,7 @@ public class BattleControls extends Controller {
 			priority = 0.8;
 			oldPokemon = trainer.getActivePokemon();
 			this.trainer = trainer;
-			while (trainer.getStoredPokemon()[pokemonNumber].getHp() == 0) {
+			 do {
 				double randomPokemon = Math.random();
 				if (randomPokemon <= 0.167)
 					pokemonNumber = 0;
@@ -149,7 +149,7 @@ public class BattleControls extends Controller {
 					pokemonNumber = 4;
 				else
 					pokemonNumber = 5;
-			}
+			} while (trainer.getStoredPokemon()[pokemonNumber].getHp() == 0);
 
 		}
 
@@ -193,7 +193,7 @@ public class BattleControls extends Controller {
 		}
 
 		public String description() {
-			return user.getName() + " used a Potion";
+			return user.getName() + " used a Potion on " + user.getActivePokemon().getName();
 		}
 	}
 
@@ -202,6 +202,7 @@ public class BattleControls extends Controller {
 		double effect = 1;
 		Trainer attacker, defender;
 		long eventTime;
+		int w;// controlador do vetor de ataques
 
 		public Fight(long eventTime, Trainer attacker) {
 			super(eventTime);
@@ -518,10 +519,17 @@ public class BattleControls extends Controller {
 		}
 
 		public void action() {
+			
 			if (attacker.getActivePokemon().getHp() == 0) {
 				es.removeCurrent();
 				return;
 			}
+			
+			if (Math.random() >= 0.5)
+				w = 1;
+			else
+				w = 0;
+			
 			effect = effective();
 			defender.getActivePokemon().decreaseHp((int) effect * attacker.getActivePokemon().a[w].power);
 			if (defender.getActivePokemon().getHp() == 0) {
@@ -589,7 +597,7 @@ public class BattleControls extends Controller {
 					addEvent(new Fight(tm + 1000 + 4000 * i, t[i]));
 				else if (n < 0.5)
 					addEvent(new Switch(tm + 1000 + 4000 * i, t[i]));
-				else if (n < 0.75)
+				else if (n < 0.55)
 					addEvent(new Run(tm + 1000 + 4000 * i, t[i]));
 				else
 					addEvent(new UsePotion(tm + 1000 + 4000 * i, t[i]));
