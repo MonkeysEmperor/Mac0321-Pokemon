@@ -1,13 +1,11 @@
 package Ex1;
-//Cada ação é um evento: ex lighton = usa item
 
-//
 
 public class BattleControls extends Controller {
 	private boolean battle = false;
-	private boolean round = true;
-	private int x = 0, y = 1; // controladores do treinador (x = treinador
-								// atacante, y = treinador atacado)
+	private int x = 0, y = 1;
+	// controladores do treinador (x = treinador
+	// atacante, y = treinador atacado)
 	// private int i = 0, j = 0; // controladores do vetor de pokemon (i =
 	// treinador 1, j = treinador 2)
 	private int w = 0;// controlador do vetor de ataques
@@ -87,7 +85,7 @@ public class BattleControls extends Controller {
 		public void action() {
 			battle = false;
 			clearEvents();
-			
+
 		}
 
 		public String description() {
@@ -131,9 +129,12 @@ public class BattleControls extends Controller {
 		private int pokemonNumber = 0;
 		Trainer trainer;
 		Pokemon oldPokemon;
+
 		public Switch(long eventTime, Trainer trainer) {
 			super(eventTime);
-
+			priority = 0.8;
+			oldPokemon = trainer.getActivePokemon();
+			this.trainer = trainer;
 			while (trainer.getStoredPokemon()[pokemonNumber].getHp() == 0) {
 				double randomPokemon = Math.random();
 				if (randomPokemon <= 0.167)
@@ -149,9 +150,7 @@ public class BattleControls extends Controller {
 				else
 					pokemonNumber = 5;
 			}
-			priority = 0.8;
-			oldPokemon = trainer.getActivePokemon();
-			this.trainer = trainer;
+
 		}
 
 		public Switch(long eventTime, Trainer trainer, int pokemonNumber) {
@@ -162,8 +161,6 @@ public class BattleControls extends Controller {
 			oldPokemon = trainer.getActivePokemon();
 			// adicionar excecao para quando escolher um pokemon com hp = 0
 		}
-
-		
 
 		public void action() {
 			trainer.setActivePokemon(trainer.getStoredPokemon()[pokemonNumber]);
@@ -564,7 +561,6 @@ public class BattleControls extends Controller {
 		}
 
 		public void action() {
-			round = false;
 			if (battle == false)
 				addEvent(new EndBattle(eventTime));
 		}
@@ -603,7 +599,7 @@ public class BattleControls extends Controller {
 		}
 
 		public String description() {
-			return null;
+			return " ";
 		}
 	}
 
