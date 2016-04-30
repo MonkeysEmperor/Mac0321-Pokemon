@@ -3,6 +3,7 @@ package Ex1;
 
 abstract public class Event {
 	private long evtTime;
+	protected double priority;
 
 	public Event(long eventTime) {
 		evtTime = eventTime;
@@ -15,4 +16,9 @@ abstract public class Event {
 	abstract public void action();
 
 	abstract public String description();
+
+	public double getPriority() {
+		return priority;
+	}
+
 }

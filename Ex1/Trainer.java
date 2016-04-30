@@ -3,28 +3,33 @@ package Ex1;
 
 public class Trainer {
 
-	int potions;
-	int pokeballs;
-	int pokemon = 6;
-	String name;
-	Pokemon activePokemon;
-	Pokemon[] p = new Pokemon[6];
+	private boolean fighting = true;
+	private boolean turnCompleted = false;
+	
+
+
+	private int potions;
+	private int pokeballs;
+	private int alivePokemon = 6;
+	private String name;
+	private Pokemon activePokemon;
+	private Pokemon[] pokemon = new Pokemon[6];
 	
 	public Trainer(String name, int potions, int pokeballs){
-		this.name = name;
-		this.potions = potions;
-		this.pokeballs = pokeballs;
+		this.setName("Pokemon Trainer" + name);
+		this.setPotions(potions);
+		this.setPokeballs(pokeballs);
 	}
 	
 	public Trainer(String nome, int potions, int pokebolas, int activePokemon){
 		this(nome, potions, pokebolas);
-		this.activePokemon = p[activePokemon];
+		this.setActivePokemon(getStoredPokemon()[activePokemon]);
 	}
 	
 	public Trainer(String name){
-		this.name = name;
-		potions = 0;
-		pokeballs = 0;
+		this.setName(name);
+		setPotions(50);
+		setPokeballs(0);
 	}
 	
 	void setName(String nome){
@@ -49,5 +54,41 @@ public class Trainer {
 	
 	int getPokeballs(){
 		return pokeballs;
+	}
+
+	int getAlivePokemon() {
+		return alivePokemon;
+	}
+
+	void setAlivePokemon(int pokemon) {
+		this.alivePokemon = pokemon;
+	}
+
+	Pokemon getActivePokemon() {
+		return activePokemon;
+	}
+
+	void setActivePokemon(Pokemon activePokemon) {
+		this.activePokemon = activePokemon;
+	}
+
+	Pokemon[] getStoredPokemon() {
+		return pokemon;
+	}
+
+	boolean isFighting() {
+		return fighting;
+	}
+
+	void setFighting(boolean fighting) {
+		this.fighting = fighting;
+	}
+	
+	public boolean isTurnCompleted() {
+		return turnCompleted;
+	}
+
+	public void setTurnCompleted(boolean turnCompleted) {
+		this.turnCompleted = turnCompleted;
 	}
 }

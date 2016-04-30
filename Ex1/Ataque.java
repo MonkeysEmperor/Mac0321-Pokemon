@@ -9,7 +9,7 @@ public class Ataque {
 	int pp;
 	double accuracy;
 	
-	Ataque(String nome, String tipo, int pp, int poder, double precisao ){
+	Ataque(String nome, String tipo, int pp, int poder, double precisao){
 		name = nome;
 		type = tipo;
 		this.pp = pp;
