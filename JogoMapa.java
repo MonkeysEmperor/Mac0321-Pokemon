@@ -4,13 +4,14 @@ import Ex1.BattleControls;
 
 public class JogoMapa extends Controller{
 	
-	boolean jogo= false;
-	static int n = 7;
-	int i = 0, j = 0, x= 0;
-	char local = ' ';
-	char[] comando = { 
+	
+	private boolean jogo = true;
+	private static int n = 7;
+	private int i = 0, j = 0, x= 0;
+	private char local = ' ';
+	private char[] comando = { 
 			'd', 'd', 's','s','d','d','s','s','a','w','a','s','s','d','d','d','s','a','w','w','d','s','a','a','w','s','d'};
-	char[][] map = {
+	private char[][] map = {
 			{ 'P', ' ', ' ', ' ', ' ' , ' ', ' '}, 
 					  { ' ', 'g', 'g', ' ', 'g' , 'g', ' '},
 					  { ' ', 'g', 'g', ' ', 'g' , 'g', ' '},			
@@ -18,49 +19,13 @@ public class JogoMapa extends Controller{
 					  { ' ', 'g', 'g', 'g', 'g' , 'g', ' '},
 					  { ' ', 'g', 'g', 'g', 'g' , 'g', ' '},
 					  { ' ', ' ', ' ', ' ', ' ' , ' ', ' '}};
-	Trainer wild = new Trainer("WILD");
-	BattleControls bc = new BattleControls(wild);;
+	Trainer wild = trainerWild();
+	BattleControls bc = new BattleControls();;
 	
-	private class Capture extends Event {
-		boolean capture = false;
-		boolean pokeballs = false;
-		double captureRate;
-		
-		public Capture(long eventTime) {
-			super(eventTime);
-		}
-
-		public void action() {
-			
-			if(bc.t[0].pokeballs == 0)
-				return;
-			else{
-				pokeballs = true;
-				captureRate = wild.p[0].getHp() / wild.p[0].getMaxHp(); 
-				Random gerador = new Random(); 
-				double numero = gerador.nextDouble();
-				if(numero < captureRate){
-					bc.t[0].bill[0] = wild.p[0];
-					capture = true;
-					bc.battle = false;
-				}
-			}	
-		}
-
-		public String description() {
-			
-			if(pokeballs = false){
-				return bc.t[0].getName() + " doesn't have any pokeballs";
-			}
-			else{
-				if(capture == true){
-					return bc.t[0].getName() + " used a Pokeball. " + wild.p[0].getName() + " was caught!";
-				}
-				else{
-					return bc.t[0].getName() + " used a Pokeball. " + wild.p[0].getName() + " was caught!";
-				}
-			}
-		}
+	public Trainer trainerWild(){
+		Trainer wild = new Trainer("WILD");
+		wild.setAlivePokemon(1);
+		return wild;
 	}
 	
 	private class Jogo extends Event{
@@ -111,25 +76,30 @@ public class JogoMapa extends Controller{
 		}
 		
 		private void gramado(double numero){
-		    if(numero < 60){
-		    	wild.p[0] = new Pokemon ("Rattata", "Normal", 30);
-				wild.p[0].a[0] = new Ataque("Tackle", "Normal", 35);
+			
+		    if(numero < 0.6){
+		   	 	wild.getStoredPokemon()[0] = new Pokemon("Rattata", "Normal", 30);
+		   	 	wild.getStoredPokemon()[0].a[0] = new Ataque("Tackle", "Normal", 35);
+		   	 	wild.setActivePokemon(wild.getStoredPokemon()[0]);
 			}
 			else
-				if(numero < 80){	
-			   		wild.p[0] = new Pokemon ("Pidgey", "Normal", "Flying", 40);
-					wild.p[0].a[0] = new Ataque("Gust", "Flying", 35);
+				if(numero < 0.8){	
+					wild.getStoredPokemon()[0] = new Pokemon("Pidgey", "Normal", "Flying", 40);
+			   	 	wild.getStoredPokemon()[0].a[0] = new Ataque("Gust", "Flying", 35);
+			   	 	wild.setActivePokemon(wild.getStoredPokemon()[0]);
 		    	 }
 				else
-					if(numero < 97){	
-						wild.p[0] = new Pokemon ("Zubat", "Poison", "Flying", 40);
-						wild.p[0].a[0] = new Ataque("Leech Life", "Bug", 20);
+					if(numero < 0.97){	
+						wild.getStoredPokemon()[0] = new Pokemon("Zubat", "Poison", "Flying", 40);
+				   	 	wild.getStoredPokemon()[0].a[0] = new Ataque("Leech Life", "Bug", 20);
+				   	 	wild.setActivePokemon(wild.getStoredPokemon()[0]);
+
 					}
 					else{
-						wild.p[0] = new Pokemon ("Mew", "Psychic", 100);
-						wild.p[0].a[0] = new Ataque("Tackle", "Normal", 35);
+						wild.getStoredPokemon()[0] = new Pokemon("Mew", "Psychic", 100);
+				   	 	wild.getStoredPokemon()[0].a[0] = new Ataque("Tackle", "Normal", 35);
+				   	 	wild.setActivePokemon(wild.getStoredPokemon()[0]);
 					}
-		    wild.pokemon = 1;
 		}
 		
 		public Jogo(long eventTime) {
@@ -138,17 +108,25 @@ public class JogoMapa extends Controller{
 		
 		public void action() {
 			long tm = System.currentTimeMillis();
+			if(comando[x] == '\0'){
+				jogo = false;
+				return;
+			}
 			anda(comando[x++]);
 			if(local == 'g'){
 			   Random gerador = new Random(); 
 			   double numero = gerador.nextDouble();
-			   if(numero > 40){
-				   bc.addEvent(new bc.Round(tm + 1000));
+			   if(numero > 0.4){
 				   gramado(numero);
+				   bc.StartBattle(bc.trainerAsh(),wild);
+				   while (bc.battle == true) {
+						bc.addEvent(bc.new NewRound(tm));
+						bc.run();
+					}
 			   }
 			}
 			tela();	
-			addEvent(new Jogo(tm + 2000));
+			addEvent(new Jogo(tm + 1000));
 			}
 
 		public String description() {
@@ -159,7 +137,9 @@ public class JogoMapa extends Controller{
 	public static void main(String[] args){
 		JogoMapa m = new JogoMapa();
 		long tm = System.currentTimeMillis();
-		m.addEvent(m.new Jogo(tm));
-		m.run();
+		while(m.jogo == true){
+			m.addEvent(m.new Jogo(tm));
+			m.run();
+		}
 	}
 }

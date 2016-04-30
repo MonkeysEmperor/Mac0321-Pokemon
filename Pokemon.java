@@ -1,32 +1,30 @@
 package Ex1;
 
+
 public class Pokemon {
  
 	final private int HPMAX;
-	int hp;
-	String name; 
-	String type1;
-	String type2;
+	private int hp;
+	private String name;
+	private String type1;
+	private String type2;
 	Ataque[] a = new Ataque[4];
 	
 	//Construtor de Pokemon
 	Pokemon (String nome, String tipo1, String tipo2, int vida){
-		name = nome;
-		type1 = tipo1;
-		type2 = tipo2;
-		HPMAX = vida;
-		hp = HPMAX;
-	}
-	Pokemon (String nome, String tipo1, int vida){
-		name = nome;
-		type1 = tipo1;
-		type2 = " ";
+		setName(nome.toUpperCase());
+		setType1(tipo1);
+		setType2(tipo2);
 		HPMAX = vida;
 		hp = HPMAX;
 	}
 	
-	void setName(String nome){
-		name = nome;
+	Pokemon (String nome, String tipo1, int vida){
+		setName(nome.toUpperCase());
+		setType1(tipo1);
+		setType2(" ");
+		HPMAX = vida;
+		hp = HPMAX;
 	}
 	
 	String getName(){
@@ -36,20 +34,42 @@ public class Pokemon {
 	int getHp(){
 		return hp;
 	}
-
 	void setHp (int value){
 		hp = value;
 	}
 	
 	void decreaseHp (int value){
 		hp -= value;
+		if (hp < 0)
+			hp = 0;
 	}
-	
 	void increaseHp (int value){
 		hp += value;
+		if (hp > HPMAX)
+			hp = HPMAX;
 	}
 	
 	int getMaxHp(){
 		return HPMAX;
+	}
+
+	void setName(String name) {
+		this.name = name;
+	}
+
+	String getType1() {
+		return type1;
+	}
+
+	void setType1(String type1) {
+		this.type1 = type1;
+	}
+
+	String getType2() {
+		return type2;
+	}
+
+	void setType2(String type2) {
+		this.type2 = type2;
 	}
 }
